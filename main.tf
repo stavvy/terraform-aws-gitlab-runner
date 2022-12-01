@@ -360,7 +360,7 @@ resource "aws_iam_policy" "instance_docker_machine_policy" {
 resource "aws_iam_role_policy_attachment" "instance_docker_machine_policy" {
   count      = local.attach_policy_to_role ? 1 : 0
   role       = var.runner_iam_role_name == ""  ? aws_iam_role.instance[0].name : var.runner_iam_role_name
-  policy_arn = aws_iam_policy.instance_docker_machine_policy.arn
+  policy_arn = aws_iam_policy.instance_docker_machine_policy[0].arn
 }
 
 ################################################################################
