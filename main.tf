@@ -346,6 +346,7 @@ resource "aws_iam_role" "instance" {
 ### iam:PassRole To pass the role from the agent to the docker machine runners
 ################################################################################
 resource "aws_iam_policy" "instance_docker_machine_policy" {
+  count       = local.attach_policy_to_role ? 1 : 0
   name        = "${local.name_iam_objects}-docker-machine"
   path        = "/"
   description = "Policy for docker machine."
@@ -357,6 +358,7 @@ resource "aws_iam_policy" "instance_docker_machine_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "instance_docker_machine_policy" {
+  count      = local.attach_policy_to_role ? 1 : 0
   role       = var.runner_iam_role_name == ""  ? aws_iam_role.instance[0].name : var.runner_iam_role_name
   policy_arn = aws_iam_policy.instance_docker_machine_policy.arn
 }
